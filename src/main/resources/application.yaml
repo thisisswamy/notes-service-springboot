@@ -1,0 +1,15 @@
+server:
+  port: 0
+  servlet:
+    context-path: /notes-service/api/
+spring:
+  application:
+    name: notes-service
+  data:
+    mongodb:
+      database: notes-app
+      uri: mongodb+srv://Swamy:swamy123@cluster0.s6fkj.mongodb.net/?retryWrites=true&w=majority
+
+
+
+
