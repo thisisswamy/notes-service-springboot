@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8989
   servlet:
     context-path: /notes-service/api/
 spring:
@@ -11,5 +11,10 @@ spring:
       uri: mongodb+srv://Swamy:swamy123@cluster0.s6fkj.mongodb.net/?retryWrites=true&w=majority
 
 
-
-
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 day
