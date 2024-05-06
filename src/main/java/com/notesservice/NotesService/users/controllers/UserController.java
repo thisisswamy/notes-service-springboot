@@ -6,11 +6,10 @@ import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -27,13 +26,13 @@ public class UserController {
     }
 
     //TODO
-    public ResponseEntity<Object> edit(@PathVariable ObjectId id){
+    public ResponseEntity<Object> edit(@PathVariable String id){
         return userService.edit(id);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> view(@PathVariable ObjectId id){
+    public ResponseEntity<Object> view(@PathVariable String id){
         return userService.view(id);
     }
 

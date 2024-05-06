@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @Document("app-users")
@@ -19,13 +20,15 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    private ObjectId id;
+    private String id;
     private String username;
     private String email;
     private String password;
     private String confirmPassword;
     private Set<Role> roles;
     private boolean isTokenExpired;
+    private Date createdAt;
+    private Date modifiedAt;
 
 
     public String getAppUsername(){

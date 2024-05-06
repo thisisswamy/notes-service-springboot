@@ -43,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         try{
 
-            if(request.getServletPath().contains("/auth")){
+            if(request.getServletPath().contains("/auth") || request.getServletPath().contains("/users/register") ){
                 filterChain.doFilter(request,response);
                 return;
             }
@@ -83,5 +83,6 @@ public class JwtFilter extends OncePerRequestFilter {
         errorResponse.put("message", "Unauthorized");
         errorResponse.put("status", HttpStatus.UNAUTHORIZED.toString());
         response.getOutputStream().println(objectMapper.writeValueAsString(errorResponse));
+        response.setStatus(401);
     }
 }

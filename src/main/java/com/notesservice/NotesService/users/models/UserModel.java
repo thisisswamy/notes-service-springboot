@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserModel {
 
-    private Object reference;
+    private String reference;
     private String email;
     private String userName;
     private Date createdAt;

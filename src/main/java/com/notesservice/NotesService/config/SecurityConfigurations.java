@@ -28,23 +28,21 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         /*
-        * By default CSRF is enabled, it no post call will work as expected, it need to be disabled
+        * By default, CSRF is enabled, it no post call will work as expected, it needs to be disabled
         * */
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) //Disabling the CSRF
-                .authorizeHttpRequests((authRequests) -> {
-                    authRequests.anyRequest().authenticated();
-                })
+                .authorizeHttpRequests((authRequests) -> authRequests.requestMatchers("/auth/**","users/register").permitAll().anyRequest().authenticated())
                 .sessionManagement(sessionMgmt -> sessionMgmt.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
     }
-    @Bean //To access to public unsecured urls
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/auth/**","users/register");
-    }
+//    @Bean //To access to public unsecured urls -> bad practice
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().requestMatchers("/auth/**","users/register");
+//    }
 
 
 }

@@ -49,7 +49,7 @@ public class UserService {
 
 
     //TODO
-    public ResponseEntity<Object> edit(ObjectId id) {
+    public ResponseEntity<Object> edit(String id) {
         Optional<User> userById = userRepository.findById(id);
         if(userById.isPresent()){
 
@@ -57,7 +57,7 @@ public class UserService {
         return null;
     }
 
-    public ResponseEntity<Object> view(ObjectId id) {
+    public ResponseEntity<Object> view(String id) {
         Optional<User> userById = userRepository.findById(id);
         if(userById.isEmpty()){
             throw new ApplicationException("User not found",HttpStatus.NOT_FOUND);
