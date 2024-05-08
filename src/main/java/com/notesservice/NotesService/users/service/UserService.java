@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +33,11 @@ public class UserService {
 
 
     public ResponseEntity<Object> save(CreateUserRequest createUserRequest){
-//        Optional<User> exitedUser = userRepository.findByEmail(createUserRequest.getEmail());
-//        if(exitedUser.isEmpty()){
-//            throw new ApplicationException("User email already exist !!", HttpStatus.BAD_REQUEST);
-//
-//        }
+        Optional<User> exitedUser = userRepository.findByEmail(createUserRequest.getEmail());
+        if(exitedUser.isPresent()){
+            throw new ApplicationException("User email already exist !!", HttpStatus.BAD_REQUEST);
+
+        }
         User user = userUtility.mapToAppUser(createUserRequest);
         User savedUser = userRepository.save(user);
         UserModel resUser = userUtility.mapResUser(savedUser);
@@ -64,5 +66,30 @@ public class UserService {
         }
         UserProfile userProfile = userUtility.mapToUserProfile(userById.get());
         return ResponseEntity.ok(userProfile);
+    }
+
+    public String deleteAllUsers() {
+        try{
+            userRepository.deleteAll();
+            return "deleted all users";
+        }catch (Exception e){
+            return "Caught exception while deleting";
+        }
+    }
+
+    public ResponseEntity<Object> viewByMail(String email) {
+        Optional<User> userById = userRepository.findByEmail(email);
+        if(userById.isEmpty()){
+            throw new ApplicationException("User not found",HttpStatus.NOT_FOUND);
+        }
+        UserProfile userProfile = userUtility.mapToUserProfile(userById.get());
+        return ResponseEntity.ok(userProfile);
+    }
+
+    public ResponseEntity<Object> profile() {
+      UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> currentUser = userRepository.findByEmail(userDetails.getUsername());
+        UserModel userModel = userUtility.mapResUser(currentUser.get());
+        return ResponseEntity.ok(userModel);
     }
 }

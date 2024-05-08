@@ -32,7 +32,7 @@ public class SecurityConfigurations {
         * */
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) //Disabling the CSRF
-                .authorizeHttpRequests((authRequests) -> authRequests.requestMatchers("/auth/**","users/register").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests((authRequests) -> authRequests.requestMatchers("auth/**","users/register").permitAll().anyRequest().authenticated())
                 .sessionManagement(sessionMgmt -> sessionMgmt.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

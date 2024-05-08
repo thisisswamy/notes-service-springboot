@@ -11,10 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -39,7 +36,9 @@ public class UserUtility {
 
     public UserModel mapResUser(User user){
         Date time = Calendar.getInstance().getTime();
-        return new UserModel(user.getId(), user.getEmail(),user.getAppUsername(), time, time);
+        List<String> roles = new ArrayList<>();
+        user.getRoles().stream().map(Role::getRoleName).forEach(roles::add);
+        return new UserModel(user.getId(), user.getEmail(),user.getAppUsername(), roles ,time, time);
     }
     public UserProfile mapToUserProfile(User user){
         return new UserProfile(

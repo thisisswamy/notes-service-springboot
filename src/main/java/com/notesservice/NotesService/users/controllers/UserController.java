@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin("http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
@@ -35,6 +35,23 @@ public class UserController {
     public ResponseEntity<Object> view(@PathVariable String id){
         return userService.view(id);
     }
+    @GetMapping("/userBy/{email}")
+    public ResponseEntity<Object> viewByMail(@PathVariable String email){
+        return userService.viewByMail(email);
+    }
+
+    @DeleteMapping("/delete/all")
+    public String deleteAllUsers(){
+        return userService.deleteAllUsers();
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Object> profile(){
+        return userService.profile();
+
+    }
+
+
 
 
 }

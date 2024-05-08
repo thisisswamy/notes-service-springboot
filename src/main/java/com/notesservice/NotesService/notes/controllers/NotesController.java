@@ -2,6 +2,7 @@ package com.notesservice.NotesService.notes.controllers;
 
 
 import com.notesservice.NotesService.notes.entity.Note;
+import com.notesservice.NotesService.notes.entity.RequestNoteModel;
 import com.notesservice.NotesService.notes.service.NotesService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class NotesController {
 
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Note note){
+    public ResponseEntity<Object> save(@RequestBody RequestNoteModel note){
         return notesService.save(note);
 
     }
@@ -40,6 +41,11 @@ public class NotesController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable String id){
         return notesService.delete(id);
+    }
+
+    @DeleteMapping("/all")
+    public String deleteAll(){
+        return notesService.deleteAll();
     }
 
 
