@@ -21,5 +21,6 @@ public class Note {
     private String notesText;
     private Object userId;
     private Date writtendate;
+    private String label;
 
 }

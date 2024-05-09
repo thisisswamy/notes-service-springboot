@@ -29,6 +29,7 @@ public class NotesService {
             userNote.setTitle(note.getTitle());
             userNote.setUserId(note.getUserId());
             userNote.setWrittendate(date);
+            userNote.setLabel(note.getLabel());
             userNote = notesRepository.save(userNote);
         }catch (Exception e){
             throw new ApplicationException("Failed to save notes !", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,4 +72,5 @@ public class NotesService {
             return "Failed to delete all";
         }
     }
+
 }

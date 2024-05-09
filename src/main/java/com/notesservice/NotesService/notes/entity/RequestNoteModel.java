@@ -13,4 +13,5 @@ public class RequestNoteModel {
     private String title;
     private String notesText;
     private Object userId;
+    private String label;
 }
